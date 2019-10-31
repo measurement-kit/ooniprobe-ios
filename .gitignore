@@ -7,3 +7,4 @@ fastlane/screenshots/*/*.png
 fastlane/screenshots/screenshots.html
 fastlane/screenshots/report.xml
 ooniprobe.xcworkspace/xcuserdata/lorenzo.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist
+probe-react-native

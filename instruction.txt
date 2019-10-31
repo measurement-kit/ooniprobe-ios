@@ -1,0 +1,5 @@
+git clone https://github.com/ooni/probe-react-native.git
+cd probe-react-native
+yarn add react-native (or npm install)
+pod install
+npm start

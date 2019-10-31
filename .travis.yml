@@ -1,9 +1,18 @@
 language: objective-c
 osx_image: xcode10.2
 podfile: Podfile
+
+env:
+  - NODE_VERSION="12.13"
+
 before_install:
+  - brew install yarn
+  - nvm install $NODE_VERSION
+  - git clone https://github.com/ooni/probe-react-native.git
+  - cd probe-react-native && yarn add react-native && cd ..
   - bundle install
   - pod repo update
   - pod install
+
 script:
   - set -o pipefail && xcodebuild clean build test -workspace ooniprobe.xcworkspace/ -sdk iphonesimulator -scheme ooniprobe -destination 'name=iPhone Xs Max'  | xcpretty

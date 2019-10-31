@@ -13,7 +13,7 @@
 #define NOTIFICATION_SERVER @"https://registry.proteus.ooni.io"
 #endif
 
-#define RELEASE_NAME @""
+#define RELEASE_NAME @"-alpha.1"
 #define NSLocalizedFormatString(fmt, ...) [NSString stringWithFormat:NSLocalizedString(fmt, nil), __VA_ARGS__]
 
 #define ONBOARDING_KEY @"first_run"

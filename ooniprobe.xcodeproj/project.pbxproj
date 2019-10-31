@@ -912,6 +912,7 @@
 				0DB68370272A8F1E523AA5E2 /* [CP] Copy Pods Resources */,
 				EDA66B691E3A23AF00DD22AC /* ShellScript */,
 				901BA501D662298E3A6192F6 /* [CP] Embed Pods Frameworks */,
+				EDFBCD432356CFAF0099DCDB /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1157,6 +1158,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/run\" 529a3ff33bd5359fe86c53f6252035178bdb03a1 86750672d61af87e007dc755cb420380fa7027b48ac0c9cc5464d5231846dab8\n";
+		};
+		EDFBCD432356CFAF0099DCDB /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export NODE_BINARY=node\n$SRCROOT/probe-react-native/node_modules/react-native/scripts/react-native-xcode.sh $SRCROOT/probe-react-native/index.js\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1500,7 +1518,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 79;
+				CURRENT_PROJECT_VERSION = 81;
 				DEVELOPMENT_TEAM = MADPSAYN6T;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -1518,6 +1536,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				MARKETING_VERSION = 2.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = org.openobservatory.ooniprobe;
 				PRODUCT_NAME = ooniprobe;
 				PROVISIONING_PROFILE = "";
@@ -1542,7 +1561,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 79;
+				CURRENT_PROJECT_VERSION = 81;
 				DEVELOPMENT_TEAM = MADPSAYN6T;
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1565,6 +1584,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				MARKETING_VERSION = 2.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = org.openobservatory.ooniprobe;
 				PRODUCT_NAME = ooniprobe;
 				PROVISIONING_PROFILE = "";

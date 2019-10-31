@@ -1,5 +1,8 @@
 #import "SettingsCategoriesTableViewController.h"
 #import "UIDevice-DeviceInfo.h"
+#import "React/RCTRootView.h"
+#import <mkall/MKVersion.h>
+#import "VersionUtility.h"
 
 @interface SettingsCategoriesTableViewController ()
 
@@ -46,7 +49,8 @@
 {
     NSString *current = [categories objectAtIndex:indexPath.row];
     if ([current isEqualToString:@"about_ooni"]){
-        [self performSegueWithIdentifier:current sender:self];
+        //[self performSegueWithIdentifier:current sender:self];
+        [self showReactUI];
     }
     else if ([current isEqualToString:@"send_email"]){
         [self sendEmail];
@@ -54,6 +58,33 @@
     else
         [self performSegueWithIdentifier:@"toSettings" sender:self];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+-(void)showReactUI{
+    NSURL *jsCodeLocation;
+    #ifdef DEBUG
+    //jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
+    jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/index.bundle?platform=ios"];
+    #else
+    jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+    #endif
+    /*
+     Note that RCTRootView initWithURL starts up a new JSC VM. To save resources and simplify the communication between RN views in different parts of your native app, you can have multiple views powered by React Native that are associated with a single JS runtime. To do that, instead of using [RCTRootView alloc] initWithURL, use RCTBridge initWithBundleURL to create a bridge and then use RCTRootView initWithBridge.
+     https://github.com/facebook/react-native/blob/master/React/Base/RCTBridge.h#L93
+     https://stackoverflow.com/questions/46944197/rctbridge-in-react-native
+     */
+      RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
+                                                   moduleName: @"About"
+                                                   initialProperties:
+    @{
+       @"ooniprobeVersion": [VersionUtility get_software_version],
+       @"mkVersion": [MKVersion versionMK]
+     }
+                                                       launchOptions:nil
+                               ];
+      UIViewController *vc = [[UIViewController alloc] init];
+      vc.view = rootView;
+      [self presentViewController:vc animated:YES completion:nil];
 }
 
 -(void)sendEmail{
