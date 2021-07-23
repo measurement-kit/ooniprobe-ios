@@ -14,6 +14,7 @@
 }
 
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *tableFooterConstraint;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *uploadbarFooterConstraint;
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) SRKResultSet* results;
 

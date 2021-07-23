@@ -3,6 +3,7 @@
 #import "ThirdPartyServices.h"
 #import "ThirdPartyServices.h"
 #import "MBProgressHUD.h"
+#import "RunningTest.h"
 
 @interface TestResultsViewController ()
 
@@ -18,6 +19,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadConstraints) name:@"networkTestEndedUI" object:nil];
     [NavigationBarUtility setNavigationBar:self.navigationController.navigationBar];
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
@@ -28,8 +30,27 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [self reloadConstraints];
     self.title = @"";
     self.title = NSLocalizedString(@"TestResults.Overview.Title", nil);
+}
+
+-(void)reloadConstraints{
+    CGFloat tableConstraint = 0;
+    CGFloat uploadConstraint = 0;
+    if ([RunningTest currentTest].isTestRunning){
+        tableConstraint += 64;
+        uploadConstraint += 64;
+    }
+    if (![Result isEveryResultUploaded:results]){
+        tableConstraint += 45;
+    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.tableFooterConstraint.constant = tableConstraint;
+        self.uploadbarFooterConstraint.constant = uploadConstraint;
+        [self.tableView setNeedsUpdateConstraints];
+        [self.tableView reloadData];
+    });
 }
 
 -(void)testFilter:(SRKQuery*)newQuery{
@@ -58,17 +79,7 @@
     NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"" ascending:NO selector:@selector(localizedStandardCompare:)];
     keys = [[dic allKeys] sortedArrayUsingDescriptors:@[ descriptor ]];
     resultsDic = dic;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if ([Result isEveryResultUploaded:results]){
-            self.tableFooterConstraint.constant = -45;
-            [self.tableView setNeedsUpdateConstraints];
-        }
-        else {
-            self.tableFooterConstraint.constant = 0;
-            [self.tableView setNeedsUpdateConstraints];
-        }
-        [self.tableView reloadData];
-    });
+    [self reloadConstraints];
 }
 
 #pragma mark - Table view data source

@@ -13,6 +13,7 @@
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadLastMeasurement) name:@"networkTestEndedUI" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(settingsChanged) name:@"settingsChanged" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeConstraints) name:@"networkTestEndedUI" object:nil];
 
     [self.testNameLabel setText:[LocalizationUtility getNameForTest:testSuite.name]];
     NSString *testLongDesc = [LocalizationUtility getLongDescriptionForTest:testSuite.name];
@@ -45,8 +46,24 @@
     [super viewWillAppear:animated];
     [NavigationBarUtility setBarTintColor:self.navigationController.navigationBar
                                     color:defaultColor];
+    [self changeConstraints];
 }
 
+-(void)changeConstraints{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if ([RunningTest currentTest].isTestRunning){
+            self.tableFooterConstraint.constant = 64;
+            [self.scrollView setNeedsUpdateConstraints];
+        }
+        else {
+            //If this number is > 0 there are still test running
+            if ([[RunningTest currentTest].testSuites count] == 0){
+                self.tableFooterConstraint.constant = 0;
+                [self.scrollView setNeedsUpdateConstraints];
+            }
+        }
+    });
+}
 
 -(void)reloadLastMeasurement{
     dispatch_async(dispatch_get_main_queue(), ^{

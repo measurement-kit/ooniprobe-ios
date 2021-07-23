@@ -29,7 +29,7 @@
 
 -(void)runTestSuite {
     self.interrupted = false;
-    self.totalTests = [self.testList count];
+    self.totalTests = [[self getTestList] count];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(interruptTest) name:@"interruptTest" object:nil];
     [self newResult];
     dispatch_queue_t serialQueue = dispatch_queue_create("org.openobservatory.queue", DISPATCH_QUEUE_SERIAL);

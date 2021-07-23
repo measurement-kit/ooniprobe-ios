@@ -11,5 +11,6 @@
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIButton *runButton;
 @property (nonatomic, strong) NSMutableArray *items;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *tableFooterConstraint;
 
 @end

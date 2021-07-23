@@ -24,5 +24,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *lastrunDetailLabel;
 @property (strong, nonatomic) IBOutlet RHMarkdownLabel *testDescriptionLabel;
 @property (strong, nonatomic) IBOutlet UIView *backgroundView;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *tableFooterConstraint;
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @end

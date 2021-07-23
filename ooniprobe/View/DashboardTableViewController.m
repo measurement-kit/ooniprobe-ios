@@ -18,20 +18,38 @@
     [super viewDidLoad];
     [self setShadowRunButton];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadTests) name:@"settingsChanged" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadLastMeasurement) name:@"networkTestEndedUI" object:nil];
     [NavigationBarUtility setNavigationBar:self.navigationController.navigationBar];
     [self loadTests];
-    [self reloadLastMeasurement];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadConstraints) name:@"networkTestEndedUI" object:nil];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES];
+    [self reloadConstraints];
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self.navigationController setNavigationBarHidden:NO];
+}
+
+-(void)reloadConstraints{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if ([RunningTest currentTest].isTestRunning){
+            self.tableFooterConstraint.constant = 64;
+            [self.tableView setNeedsUpdateConstraints];
+        }
+        else {
+            //If this number is > 0 there are still test running
+            if ([[RunningTest currentTest].testSuites count] == 0){
+                self.tableFooterConstraint.constant = 0;
+                [self.tableView setNeedsUpdateConstraints];
+            }
+        }
+        [self.tableView reloadData];
+        [self reloadLastMeasurement];
+    });
 }
 
 -(void)setShadowRunButton{

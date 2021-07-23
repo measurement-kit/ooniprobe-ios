@@ -42,6 +42,11 @@
     [self addAnimation];
 }
 
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
+}
+
 -(void)testStart{
     if (self.animation)
         [self.animation removeFromSuperview];
@@ -59,11 +64,6 @@
         }
     });
     [self setRuntime];
-}
-
--(void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
 }
 
 -(void)setRuntime{
